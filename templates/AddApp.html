@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Experts Pi Cloud App</title>
+ 
+    
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/css/signup.css" rel="stylesheet">
+    
+  </head>
+
+  <body>
+ 
+     
+      <div class="jumbotron">
+        <h1>Deploy New App</h1>
+        <form class="form-signin">
+        <label for="inputName" class="sr-only">App Name</label>
+        <input type="text" name="inputAppName" id="inputAppName" class="form-control" placeholder="App Name" required autofocus>
+        <label for="inputEmail" class="sr-only">GitHub URL</label>
+        <input type="text" name="inputGitURL" id="inputGitURL" class="form-control" placeholder="GitHub URL" required autofocus>
+       
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Deploy</button>
+      </form>
+      <div class="modal"></div>
+      <div class="res"></div>
+      </div>
+ 
+       
+ 
+      <footer class="footer">
+        <p>&copy; Expert Company 2016</p>
+      </footer>
+      <script src="../static/js/jquery-1.12.3.js"></script>
+      <script src="../static/js/my-script.js"></script>
+ 
+    </div>
+  </body>
+</html>
