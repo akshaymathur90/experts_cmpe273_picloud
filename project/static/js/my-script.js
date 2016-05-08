@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     $body = $("body");
+     $body.css('background-image', 'none');
 
     $(document).on({
         //ajaxStart: function() { $body.addClass("loading"); },

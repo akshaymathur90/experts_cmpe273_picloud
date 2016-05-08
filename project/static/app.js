@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ngRoute']);
 
 myApp.config(function($routeProvider) {
     $routeProvider
-        .when('/', { templateUrl: 'static/partials/home.html' ,
+        .when('/', { templateUrl: 'static/partials/AddApp.html' ,
     				  access: {restricted: true}
     				})
         .when('/login', {
