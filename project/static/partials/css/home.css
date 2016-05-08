@@ -1,0 +1,42 @@
+body{
+	background: url("../img/cloud1.jpg") 0 no-repeat;
+	background-size: 100% 100%;
+	padding-bottom: 10.5%;
+}
+.lg-block{
+	opacity: 0.9;
+}
+#form-container {
+    background: #2f2f2f;
+    margin-top: 20%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    min-width: 350px;
+}
+
+#form-container .page-header {
+    background: #151515;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 30px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#status-buttons{
+    color: #00BC8C;
+    font-weight: bold;
+    margin: 0 auto 10px;
+    padding-top: 5px;
+}
+
+#signup-form {
+    position: relative;
+    min-height: 250px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+label {
+    color: #FFFFFF;
+}
