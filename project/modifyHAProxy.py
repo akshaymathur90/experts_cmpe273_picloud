@@ -1,4 +1,3 @@
-#!flask/bin/python
 from pyhaproxy.parse import Parser
 from pyhaproxy.render import Render
 import pyhaproxy.config as config

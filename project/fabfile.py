@@ -3,13 +3,17 @@ from fabric.api import env,run,execute,hosts
 # make sure this package is installed on all the server - sudo apt-get install python-virtualenv
 
 # 1 - Set the (global) host_string
-machine = "samata@54.215.224.150"
-env.host_string = machine
-env.passwords = { machine + ':22': '273project'}
-def install_env(url,port):
+#machine = "samata@54.215.224.150"
+#env.host_string = machine
+#env.passwords = { machine + ':22': '273project'}
+def install_env(url,ip,port):
   #port ="8777"
   #url = "https://bitbucket.org/SamSirsikar/273project.git"
   #run("kill `lsof -t -i:"+port+"`")
+  machine = "pi@"
+  machine=machine+ip
+  env.host_string = machine
+  env.passwords = { machine + ':22': 'raspberry'}
   project_name = url.rsplit("/", 1)[1]
   run("rm -rf ./" + project_name)
   run("rm -rf /tmp/venv/")
@@ -34,5 +38,5 @@ def install_env(url,port):
   
   run("set -m; PORT=" + port + " PATH=/tmp/venv/bin:$PATH python ./"+ project_name+"/"+app_name[1].rstrip('\r')+" nohup sleep 100 >> /tmp/xxx 2>&1 < /dev/null & pty=False" )
 
-def install(url,port):
-	execute(install_env,url,port)
+def install(url,ip,port):
+	execute(install_env,url,ip,port)

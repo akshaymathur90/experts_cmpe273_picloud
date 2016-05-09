@@ -1,6 +1,6 @@
 # project/__init__.py
 
-from flask import Flask, request, jsonify, session, render_template
+from flask import Flask, request, jsonify, session, render_template, json
 from fabric.api import env,run,execute,hosts
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -81,13 +81,36 @@ def status():
         if session['logged_in']:
             return jsonify({'status': True})
     else:
-        return jsonify({'status': False})     
-		
+        return jsonify({'status': False}) 
+            
+@app.route('/registerworker',methods=['POST'])
+def registerWorker():
+	content = request.json
+	print content['IP']
+	# Insert in DB
+	databaseConn.add_worker(content['IP'])
+	return json.dumps({'html':'<span>All fields good !!</span>'})
+			
 @app.route('/newapp',methods=['POST'])
 def signUp():
     appName = request.form['inputAppName']
     gitURL= request.form['inputGitURL']
-    fabfile.install(gitURL,'8777')
+    
+    check = databaseConn.check_dups(appName)
+    if check>1:
+    	return json.dumps({'html':'Duplicate App Name'})
+    if check==1:
+    	return json.dumps({'html':'In database already.'})
+    	
+    workerip=databaseConn.get_workerIP()
+    print "Worker iP from db = "+workerip
+    
+    port = databaseConn.get_availablePorts(workerip)
+    
+    if port == -1:
+    	return json.dumps({'html':'All ports are in use.'})
+    fabfile.install(gitURL,workerip,port)
+    
     #Input data to DB
     
     
@@ -95,11 +118,12 @@ def signUp():
     pathName='/'+appName
     backendName='backend_'+appName
     serverName='serv_'+appName
-    databaseConn.add_instance(appName, pathName, '54.215.224.150', 8777)
+    databaseConn.add_instance(appName, pathName, workerip, int(port))
     print gitURL,appName
     
     #Modify HA Proxy
-    modifyHAProxy.insertNewApp(aclName, pathName, backendName, serverName, '54.215.224.150', '8777')
+    modifyHAProxy.insertNewApp(aclName, pathName, backendName, serverName, workerip, port)
+    #call(['haproxy -D -f /Users/akshaymathur/Documents/StudyMaterial/Labs/273/Finals/Integrate/config.cfg -p /Users/akshaymathur/Documents/StudyMaterial/Labs/273/Finals/Integrate/haproxy.pid -sf $(cat /Users/akshaymathur/Documents/StudyMaterial/Labs/273/Finals/Integrate/haproxy.pid)'])
     return json.dumps({'html':'<span>All fields good !!</span>'})
 
 #if __name__ == "__main__":
